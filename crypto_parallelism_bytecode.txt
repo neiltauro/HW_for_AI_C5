@@ -1,0 +1,242 @@
+  0           RESUME                   0
+
+  1           LOAD_CONST               0 (0)
+              LOAD_CONST               1 (None)
+              IMPORT_NAME              0 (concurrent.futures)
+              STORE_NAME               1 (concurrent)
+
+  3           LOAD_CONST               2 (<code object caesar_cipher_encrypt_parallel at 0x0000021A0E5CC0F0, file ".\crypto_parallelism.py", line 3>)
+              MAKE_FUNCTION
+              STORE_NAME               2 (caesar_cipher_encrypt_parallel)
+
+ 30           LOAD_CONST               3 (<code object caesar_cipher_decrypt_parallel at 0x0000021A0E4FC4E0, file ".\crypto_parallelism.py", line 30>)
+              MAKE_FUNCTION
+              STORE_NAME               3 (caesar_cipher_decrypt_parallel)
+
+ 40           LOAD_NAME                4 (__name__)
+              LOAD_CONST               4 ('__main__')
+              COMPARE_OP              88 (bool(==))
+              POP_JUMP_IF_FALSE       56 (to L1)
+
+ 42           LOAD_CONST               5 ("The quick brown fox jumps over the lazy dog 1234567890!@#$%^&*()_+-=[]{}|;:',.<>?/ ")
+              LOAD_CONST               6 (10000)
+              BINARY_OP                5 (*)
+              STORE_NAME               5 (plaintext)
+
+ 43           LOAD_CONST               7 (10)
+              STORE_NAME               6 (shift)
+
+ 46           LOAD_NAME                2 (caesar_cipher_encrypt_parallel)
+              PUSH_NULL
+              LOAD_NAME                5 (plaintext)
+              LOAD_NAME                6 (shift)
+              CALL                     2
+              STORE_NAME               7 (encrypted)
+
+ 47           LOAD_NAME                8 (print)
+              PUSH_NULL
+              LOAD_CONST               8 ('Encrypted:')
+              LOAD_NAME                7 (encrypted)
+              LOAD_CONST               1 (None)
+              LOAD_CONST               9 (100)
+              BINARY_SLICE
+              LOAD_CONST              10 ('...')
+              BINARY_OP                0 (+)
+              CALL                     2
+              POP_TOP
+
+ 50           LOAD_NAME                3 (caesar_cipher_decrypt_parallel)
+              PUSH_NULL
+              LOAD_NAME                7 (encrypted)
+              LOAD_NAME                6 (shift)
+              CALL                     2
+              STORE_NAME               9 (decrypted)
+
+ 51           LOAD_NAME                8 (print)
+              PUSH_NULL
+              LOAD_CONST              11 ('Decrypted:')
+              LOAD_NAME                9 (decrypted)
+              LOAD_CONST               1 (None)
+              LOAD_CONST               9 (100)
+              BINARY_SLICE
+              LOAD_CONST              10 ('...')
+              BINARY_OP                0 (+)
+              CALL                     2
+              POP_TOP
+              RETURN_CONST             1 (None)
+
+ 40   L1:     RETURN_CONST             1 (None)
+
+Disassembly of <code object caesar_cipher_encrypt_parallel at 0x0000021A0E5CC0F0, file ".\crypto_parallelism.py", line 3>:
+  --            MAKE_CELL                1 (shift)
+
+   3            RESUME                   0
+
+  10            LOAD_FAST                1 (shift)
+                BUILD_TUPLE              1
+                LOAD_CONST               1 (<code object encrypt_chunk at 0x0000021A0E0DF130, file ".\crypto_parallelism.py", line 10>)
+                MAKE_FUNCTION
+                SET_FUNCTION_ATTRIBUTE   8 (closure)
+                STORE_FAST               2 (encrypt_chunk)
+
+  21            LOAD_GLOBAL              1 (len + NULL)
+                LOAD_FAST                0 (text)
+                CALL                     1
+                LOAD_CONST               2 (4)
+                BINARY_OP                2 (//)
+                COPY                     1
+                TO_BOOL
+                POP_JUMP_IF_TRUE         2 (to L1)
+                POP_TOP
+                LOAD_CONST               3 (1)
+        L1:     STORE_FAST               3 (chunk_size)
+
+  22            LOAD_GLOBAL              3 (range + NULL)
+                LOAD_CONST               4 (0)
+                LOAD_GLOBAL              1 (len + NULL)
+                LOAD_FAST                0 (text)
+                CALL                     1
+                LOAD_FAST                3 (chunk_size)
+                CALL                     3
+                GET_ITER
+                LOAD_FAST_AND_CLEAR      4 (i)
+                SWAP                     2
+        L2:     BUILD_LIST               0
+                SWAP                     2
+                GET_ITER
+        L3:     FOR_ITER                 9 (to L4)
+                STORE_FAST_LOAD_FAST    64 (i, text)
+                LOAD_FAST_LOAD_FAST     68 (i, i)
+                LOAD_FAST                3 (chunk_size)
+                BINARY_OP                0 (+)
+                BINARY_SLICE
+                LIST_APPEND              2
+                JUMP_BACKWARD           11 (to L3)
+        L4:     END_FOR
+                POP_TOP
+        L5:     STORE_FAST               5 (chunks)
+                STORE_FAST               4 (i)
+
+  25            LOAD_GLOBAL              4 (concurrent)
+                LOAD_ATTR                6 (futures)
+                LOAD_ATTR                9 (ThreadPoolExecutor + NULL|self)
+                CALL                     0
+                BEFORE_WITH
+        L6:     STORE_FAST               6 (executor)
+
+  26            LOAD_GLOBAL             11 (list + NULL)
+                LOAD_FAST                6 (executor)
+                LOAD_ATTR               13 (map + NULL|self)
+                LOAD_FAST_LOAD_FAST     37 (encrypt_chunk, chunks)
+                CALL                     2
+                CALL                     1
+                STORE_FAST               7 (encrypted_chunks)
+
+  25    L7:     LOAD_CONST               5 (None)
+                LOAD_CONST               5 (None)
+                LOAD_CONST               5 (None)
+                CALL                     2
+                POP_TOP
+
+  28    L8:     LOAD_CONST               6 ('')
+                LOAD_ATTR               15 (join + NULL|self)
+                LOAD_FAST_CHECK          7 (encrypted_chunks)
+                CALL                     1
+                RETURN_VALUE
+
+  --    L9:     SWAP                     2
+                POP_TOP
+
+  22            SWAP                     2
+                STORE_FAST               4 (i)
+                RERAISE                  0
+
+  25   L10:     PUSH_EXC_INFO
+                WITH_EXCEPT_START
+                TO_BOOL
+                POP_JUMP_IF_TRUE         1 (to L11)
+                RERAISE                  2
+       L11:     POP_TOP
+       L12:     POP_EXCEPT
+                POP_TOP
+                POP_TOP
+                JUMP_BACKWARD_NO_INTERRUPT 36 (to L8)
+
+  --   L13:     COPY                     3
+                POP_EXCEPT
+                RERAISE                  1
+ExceptionTable:
+  L2 to L5 -> L9 [2]
+  L6 to L7 -> L10 [1] lasti
+  L10 to L12 -> L13 [3] lasti
+
+Disassembly of <code object encrypt_chunk at 0x0000021A0E0DF130, file ".\crypto_parallelism.py", line 10>:
+  --           COPY_FREE_VARS           1
+
+  10           RESUME                   0
+
+  11           LOAD_CONST               1 ('')
+               STORE_FAST               1 (encrypted_chunk)
+
+  12           LOAD_FAST                0 (chunk)
+               GET_ITER
+       L1:     FOR_ITER               108 (to L5)
+               STORE_FAST               2 (char)
+
+  13           LOAD_FAST                2 (char)
+               LOAD_ATTR                1 (isalpha + NULL|self)
+               CALL                     0
+               TO_BOOL
+               POP_JUMP_IF_FALSE       80 (to L4)
+
+  14           LOAD_FAST                2 (char)
+               LOAD_ATTR                3 (isupper + NULL|self)
+               CALL                     0
+               TO_BOOL
+               POP_JUMP_IF_FALSE       11 (to L2)
+               LOAD_GLOBAL              5 (ord + NULL)
+               LOAD_CONST               2 ('A')
+               CALL                     1
+               JUMP_FORWARD            10 (to L3)
+       L2:     LOAD_GLOBAL              5 (ord + NULL)
+               LOAD_CONST               3 ('a')
+               CALL                     1
+       L3:     STORE_FAST               3 (shift_base)
+
+  15           LOAD_FAST                1 (encrypted_chunk)
+               LOAD_GLOBAL              7 (chr + NULL)
+               LOAD_GLOBAL              5 (ord + NULL)
+               LOAD_FAST                2 (char)
+               CALL                     1
+               LOAD_FAST                3 (shift_base)
+               BINARY_OP               10 (-)
+               LOAD_DEREF               4 (shift)
+               BINARY_OP                0 (+)
+               LOAD_CONST               4 (26)
+               BINARY_OP                6 (%)
+               LOAD_FAST                3 (shift_base)
+               BINARY_OP                0 (+)
+               CALL                     1
+               BINARY_OP               13 (+=)
+               STORE_FAST               1 (encrypted_chunk)
+               JUMP_BACKWARD          104 (to L1)
+
+  17   L4:     LOAD_FAST_LOAD_FAST     18 (encrypted_chunk, char)
+               BINARY_OP               13 (+=)
+               STORE_FAST               1 (encrypted_chunk)
+               JUMP_BACKWARD          110 (to L1)
+
+  12   L5:     END_FOR
+               POP_TOP
+
+  18           LOAD_FAST                1 (encrypted_chunk)
+               RETURN_VALUE
+
+Disassembly of <code object caesar_cipher_decrypt_parallel at 0x0000021A0E4FC4E0, file ".\crypto_parallelism.py", line 30>:
+ 30           RESUME                   0
+
+ 37           LOAD_GLOBAL              1 (caesar_cipher_encrypt_parallel + NULL)
+              LOAD_FAST_LOAD_FAST      1 (text, shift)
+              UNARY_NEGATIVE
+              CALL                     2
+              RETURN_VALUE

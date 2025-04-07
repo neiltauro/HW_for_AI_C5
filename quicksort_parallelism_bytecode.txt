@@ -1,0 +1,251 @@
+   0           RESUME                   0
+
+   1           LOAD_CONST               0 (0)
+               LOAD_CONST               1 (None)
+               IMPORT_NAME              0 (concurrent.futures)
+               STORE_NAME               1 (concurrent)
+
+   3           LOAD_CONST               2 (<code object quicksort_parallel at 0x00000239615E0E60, file ".\quicksort_parallelism.py", line 3>)
+               MAKE_FUNCTION
+               STORE_NAME               2 (quicksort_parallel)
+
+  28           LOAD_NAME                3 (__name__)
+               LOAD_CONST               3 ('__main__')
+               COMPARE_OP              88 (bool(==))
+               POP_JUMP_IF_FALSE       72 (to L5)
+
+  29           LOAD_CONST               0 (0)
+               LOAD_CONST               1 (None)
+               IMPORT_NAME              4 (random)
+               STORE_NAME               4 (random)
+
+  31           LOAD_NAME                5 (range)
+               PUSH_NULL
+               LOAD_CONST               4 (5000)
+               CALL                     1
+               GET_ITER
+               LOAD_FAST_AND_CLEAR      0 (_)
+               SWAP                     2
+       L1:     BUILD_LIST               0
+               SWAP                     2
+               GET_ITER
+       L2:     FOR_ITER                21 (to L3)
+               STORE_FAST               0 (_)
+               LOAD_NAME                4 (random)
+               LOAD_ATTR               13 (randint + NULL|self)
+               LOAD_CONST               0 (0)
+               LOAD_CONST               5 (10000)
+               CALL                     2
+               LIST_APPEND              2
+               JUMP_BACKWARD           23 (to L2)
+       L3:     END_FOR
+               POP_TOP
+       L4:     SWAP                     2
+               STORE_FAST               0 (_)
+               STORE_NAME               7 (sample_array)
+
+  32           LOAD_NAME                8 (print)
+               PUSH_NULL
+               LOAD_CONST               6 ('Original array:')
+               LOAD_NAME                7 (sample_array)
+               CALL                     2
+               POP_TOP
+
+  34           LOAD_NAME                2 (quicksort_parallel)
+               PUSH_NULL
+               LOAD_NAME                7 (sample_array)
+               CALL                     1
+               STORE_NAME               9 (sorted_array)
+
+  35           LOAD_NAME                8 (print)
+               PUSH_NULL
+               LOAD_CONST               7 ('Sorted array:')
+               LOAD_NAME                9 (sorted_array)
+               CALL                     2
+               POP_TOP
+               RETURN_CONST             1 (None)
+
+  28   L5:     RETURN_CONST             1 (None)
+
+  --   L6:     SWAP                     2
+               POP_TOP
+
+  31           SWAP                     2
+               STORE_FAST               0 (_)
+               RERAISE                  0
+ExceptionTable:
+  L1 to L4 -> L6 [2]
+
+Disassembly of <code object quicksort_parallel at 0x00000239615E0E60, file ".\quicksort_parallelism.py", line 3>:
+   3            RESUME                   0
+
+   9            LOAD_GLOBAL              1 (len + NULL)
+                LOAD_FAST                0 (arr)
+                CALL                     1
+                LOAD_CONST               1 (1)
+                COMPARE_OP              58 (bool(<=))
+                POP_JUMP_IF_FALSE        2 (to L1)
+
+  10            LOAD_FAST                0 (arr)
+                RETURN_VALUE
+
+  12    L1:     LOAD_FAST                0 (arr)
+                LOAD_GLOBAL              1 (len + NULL)
+                LOAD_FAST                0 (arr)
+                CALL                     1
+                LOAD_CONST               2 (2)
+                BINARY_OP                2 (//)
+                BINARY_SUBSCR
+                STORE_FAST               1 (pivot)
+
+  13            LOAD_FAST                0 (arr)
+                GET_ITER
+                LOAD_FAST_AND_CLEAR      2 (x)
+                SWAP                     2
+        L2:     BUILD_LIST               0
+                SWAP                     2
+                GET_ITER
+        L3:     FOR_ITER                12 (to L6)
+                STORE_FAST_LOAD_FAST    34 (x, x)
+                LOAD_FAST                1 (pivot)
+                COMPARE_OP              18 (bool(<))
+        L4:     POP_JUMP_IF_TRUE         2 (to L5)
+                JUMP_BACKWARD           10 (to L3)
+        L5:     LOAD_FAST                2 (x)
+                LIST_APPEND              2
+                JUMP_BACKWARD           14 (to L3)
+        L6:     END_FOR
+                POP_TOP
+        L7:     STORE_FAST               3 (left)
+                STORE_FAST               2 (x)
+
+  14            LOAD_FAST                0 (arr)
+                GET_ITER
+                LOAD_FAST_AND_CLEAR      2 (x)
+                SWAP                     2
+        L8:     BUILD_LIST               0
+                SWAP                     2
+                GET_ITER
+        L9:     FOR_ITER                12 (to L12)
+                STORE_FAST_LOAD_FAST    34 (x, x)
+                LOAD_FAST                1 (pivot)
+                COMPARE_OP              88 (bool(==))
+       L10:     POP_JUMP_IF_TRUE         2 (to L11)
+                JUMP_BACKWARD           10 (to L9)
+       L11:     LOAD_FAST                2 (x)
+                LIST_APPEND              2
+                JUMP_BACKWARD           14 (to L9)
+       L12:     END_FOR
+                POP_TOP
+       L13:     STORE_FAST               4 (middle)
+                STORE_FAST               2 (x)
+
+  15            LOAD_FAST                0 (arr)
+                GET_ITER
+                LOAD_FAST_AND_CLEAR      2 (x)
+                SWAP                     2
+       L14:     BUILD_LIST               0
+                SWAP                     2
+                GET_ITER
+       L15:     FOR_ITER                12 (to L18)
+                STORE_FAST_LOAD_FAST    34 (x, x)
+                LOAD_FAST                1 (pivot)
+                COMPARE_OP             148 (bool(>))
+       L16:     POP_JUMP_IF_TRUE         2 (to L17)
+                JUMP_BACKWARD           10 (to L15)
+       L17:     LOAD_FAST                2 (x)
+                LIST_APPEND              2
+                JUMP_BACKWARD           14 (to L15)
+       L18:     END_FOR
+                POP_TOP
+       L19:     STORE_FAST               5 (right)
+                STORE_FAST               2 (x)
+
+  18            LOAD_GLOBAL              2 (concurrent)
+                LOAD_ATTR                4 (futures)
+                LOAD_ATTR                7 (ThreadPoolExecutor + NULL|self)
+                CALL                     0
+                BEFORE_WITH
+       L20:     STORE_FAST               6 (executor)
+
+  19            LOAD_FAST                6 (executor)
+                LOAD_ATTR                9 (submit + NULL|self)
+                LOAD_GLOBAL             10 (quicksort_parallel)
+                LOAD_FAST                3 (left)
+                CALL                     2
+                STORE_FAST               7 (left_sorted_future)
+
+  20            LOAD_FAST                6 (executor)
+                LOAD_ATTR                9 (submit + NULL|self)
+                LOAD_GLOBAL             10 (quicksort_parallel)
+                LOAD_FAST                5 (right)
+                CALL                     2
+                STORE_FAST               8 (right_sorted_future)
+
+  22            LOAD_FAST                7 (left_sorted_future)
+                LOAD_ATTR               13 (result + NULL|self)
+                CALL                     0
+                STORE_FAST               9 (left_sorted)
+
+  23            LOAD_FAST                8 (right_sorted_future)
+                LOAD_ATTR               13 (result + NULL|self)
+                CALL                     0
+                STORE_FAST              10 (right_sorted)
+
+  18   L21:     LOAD_CONST               3 (None)
+                LOAD_CONST               3 (None)
+                LOAD_CONST               3 (None)
+                CALL                     2
+                POP_TOP
+
+  25   L22:     LOAD_FAST_CHECK          9 (left_sorted)
+                LOAD_FAST                4 (middle)
+                BINARY_OP                0 (+)
+                LOAD_FAST_CHECK         10 (right_sorted)
+                BINARY_OP                0 (+)
+                RETURN_VALUE
+
+  --   L23:     SWAP                     2
+                POP_TOP
+
+  13            SWAP                     2
+                STORE_FAST               2 (x)
+                RERAISE                  0
+
+  --   L24:     SWAP                     2
+                POP_TOP
+
+  14            SWAP                     2
+                STORE_FAST               2 (x)
+                RERAISE                  0
+
+  --   L25:     SWAP                     2
+                POP_TOP
+
+  15            SWAP                     2
+                STORE_FAST               2 (x)
+                RERAISE                  0
+
+  18   L26:     PUSH_EXC_INFO
+                WITH_EXCEPT_START
+                TO_BOOL
+                POP_JUMP_IF_TRUE         1 (to L27)
+                RERAISE                  2
+       L27:     POP_TOP
+       L28:     POP_EXCEPT
+                POP_TOP
+                POP_TOP
+                JUMP_BACKWARD_NO_INTERRUPT 37 (to L22)
+
+  --   L29:     COPY                     3
+                POP_EXCEPT
+                RERAISE                  1
+ExceptionTable:
+  L2 to L4 -> L23 [2]
+  L5 to L7 -> L23 [2]
+  L8 to L10 -> L24 [2]
+  L11 to L13 -> L24 [2]
+  L14 to L16 -> L25 [2]
+  L17 to L19 -> L25 [2]
+  L20 to L21 -> L26 [1] lasti
+  L26 to L28 -> L29 [3] lasti

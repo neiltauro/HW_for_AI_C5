@@ -1,0 +1,317 @@
+   0            RESUME                   0
+
+   1            LOAD_CONST               0 (0)
+                LOAD_CONST               1 (None)
+                IMPORT_NAME              0 (concurrent.futures)
+                STORE_NAME               1 (concurrent)
+
+   2            LOAD_CONST               0 (0)
+                LOAD_CONST               1 (None)
+                IMPORT_NAME              2 (random)
+                STORE_NAME               2 (random)
+
+   4            LOAD_CONST               2 (<code object matrix_multiply_parallel at 0x00000169DD122AD0, file ".\matrix_parallelism.py", line 4>)
+                MAKE_FUNCTION
+                STORE_NAME               3 (matrix_multiply_parallel)
+
+  29            LOAD_NAME                4 (__name__)
+                LOAD_CONST               3 ('__main__')
+                COMPARE_OP              88 (bool(==))
+                POP_JUMP_IF_FALSE      165 (to L17)
+
+  31            LOAD_NAME                5 (range)
+                PUSH_NULL
+                LOAD_CONST               4 (100)
+                CALL                     1
+                GET_ITER
+                LOAD_FAST_AND_CLEAR      0 (_)
+                SWAP                     2
+        L1:     BUILD_LIST               0
+                SWAP                     2
+                GET_ITER
+        L2:     FOR_ITER                44 (to L7)
+                STORE_FAST               0 (_)
+                LOAD_NAME                5 (range)
+                PUSH_NULL
+                LOAD_CONST               4 (100)
+                CALL                     1
+                GET_ITER
+                LOAD_FAST_AND_CLEAR      0 (_)
+                SWAP                     2
+        L3:     BUILD_LIST               0
+                SWAP                     2
+                GET_ITER
+        L4:     FOR_ITER                21 (to L5)
+                STORE_FAST               0 (_)
+                LOAD_NAME                2 (random)
+                LOAD_ATTR               13 (randint + NULL|self)
+                LOAD_CONST               5 (1)
+                LOAD_CONST               6 (10)
+                CALL                     2
+                LIST_APPEND              2
+                JUMP_BACKWARD           23 (to L4)
+        L5:     END_FOR
+                POP_TOP
+        L6:     SWAP                     2
+                STORE_FAST               0 (_)
+                LIST_APPEND              2
+                JUMP_BACKWARD           46 (to L2)
+        L7:     END_FOR
+                POP_TOP
+        L8:     SWAP                     2
+                STORE_FAST               0 (_)
+                STORE_NAME               7 (A)
+
+  34            LOAD_NAME                5 (range)
+                PUSH_NULL
+                LOAD_CONST               4 (100)
+                CALL                     1
+                GET_ITER
+                LOAD_FAST_AND_CLEAR      0 (_)
+                SWAP                     2
+        L9:     BUILD_LIST               0
+                SWAP                     2
+                GET_ITER
+       L10:     FOR_ITER                44 (to L15)
+                STORE_FAST               0 (_)
+                LOAD_NAME                5 (range)
+                PUSH_NULL
+                LOAD_CONST               4 (100)
+                CALL                     1
+                GET_ITER
+                LOAD_FAST_AND_CLEAR      0 (_)
+                SWAP                     2
+       L11:     BUILD_LIST               0
+                SWAP                     2
+                GET_ITER
+       L12:     FOR_ITER                21 (to L13)
+                STORE_FAST               0 (_)
+                LOAD_NAME                2 (random)
+                LOAD_ATTR               13 (randint + NULL|self)
+                LOAD_CONST               5 (1)
+                LOAD_CONST               6 (10)
+                CALL                     2
+                LIST_APPEND              2
+                JUMP_BACKWARD           23 (to L12)
+       L13:     END_FOR
+                POP_TOP
+       L14:     SWAP                     2
+                STORE_FAST               0 (_)
+                LIST_APPEND              2
+                JUMP_BACKWARD           46 (to L10)
+       L15:     END_FOR
+                POP_TOP
+       L16:     SWAP                     2
+                STORE_FAST               0 (_)
+                STORE_NAME               8 (B)
+
+  36            LOAD_NAME                9 (print)
+                PUSH_NULL
+                LOAD_CONST               7 ('Matrix A:')
+                LOAD_NAME                7 (A)
+                CALL                     2
+                POP_TOP
+
+  37            LOAD_NAME                9 (print)
+                PUSH_NULL
+                LOAD_CONST               8 ('Matrix B:')
+                LOAD_NAME                8 (B)
+                CALL                     2
+                POP_TOP
+
+  39            LOAD_NAME                3 (matrix_multiply_parallel)
+                PUSH_NULL
+                LOAD_NAME                7 (A)
+                LOAD_NAME                8 (B)
+                CALL                     2
+                STORE_NAME              10 (result)
+
+  40            LOAD_NAME                9 (print)
+                PUSH_NULL
+                LOAD_CONST               9 ('Resultant Matrix:')
+                LOAD_NAME               10 (result)
+                CALL                     2
+                POP_TOP
+                RETURN_CONST             1 (None)
+
+  29   L17:     RETURN_CONST             1 (None)
+
+  --   L18:     SWAP                     2
+                POP_TOP
+
+  31            SWAP                     2
+                STORE_FAST               0 (_)
+                RERAISE                  0
+
+  --   L19:     SWAP                     2
+                POP_TOP
+
+  31            SWAP                     2
+                STORE_FAST               0 (_)
+                RERAISE                  0
+
+  --   L20:     SWAP                     2
+                POP_TOP
+
+  34            SWAP                     2
+                STORE_FAST               0 (_)
+                RERAISE                  0
+
+  --   L21:     SWAP                     2
+                POP_TOP
+
+  34            SWAP                     2
+                STORE_FAST               0 (_)
+                RERAISE                  0
+ExceptionTable:
+  L1 to L3 -> L19 [2]
+  L3 to L6 -> L18 [5]
+  L6 to L8 -> L19 [2]
+  L9 to L11 -> L21 [2]
+  L11 to L14 -> L20 [5]
+  L14 to L16 -> L21 [2]
+  L18 to L19 -> L19 [2]
+  L20 to L21 -> L21 [2]
+
+Disassembly of <code object matrix_multiply_parallel at 0x00000169DD122AD0, file ".\matrix_parallelism.py", line 4>:
+  --           MAKE_CELL                5 (B_transposed)
+
+   4           RESUME                   0
+
+  12           LOAD_GLOBAL              1 (len + NULL)
+               LOAD_FAST                0 (A)
+               LOAD_CONST               1 (0)
+               BINARY_SUBSCR
+               CALL                     1
+               LOAD_GLOBAL              1 (len + NULL)
+               LOAD_FAST                1 (B)
+               CALL                     1
+               COMPARE_OP             119 (bool(!=))
+               POP_JUMP_IF_FALSE       11 (to L1)
+
+  13           LOAD_GLOBAL              3 (ValueError + NULL)
+               LOAD_CONST               2 ('Number of columns in A must equal number of rows in B.')
+               CALL                     1
+               RAISE_VARARGS            1
+
+  16   L1:     LOAD_GLOBAL              5 (list + NULL)
+               LOAD_GLOBAL              7 (zip + NULL)
+               LOAD_FAST                1 (B)
+               CALL_FUNCTION_EX         0
+               CALL                     1
+               STORE_DEREF              5 (B_transposed)
+
+  19           LOAD_FAST                5 (B_transposed)
+               BUILD_TUPLE              1
+               LOAD_CONST               3 (<code object compute_row at 0x00000169DD46C4F0, file ".\matrix_parallelism.py", line 19>)
+               MAKE_FUNCTION
+               SET_FUNCTION_ATTRIBUTE   8 (closure)
+               STORE_FAST               2 (compute_row)
+
+  23           LOAD_GLOBAL              8 (concurrent)
+               LOAD_ATTR               10 (futures)
+               LOAD_ATTR               13 (ThreadPoolExecutor + NULL|self)
+               CALL                     0
+               BEFORE_WITH
+       L2:     STORE_FAST               3 (executor)
+
+  24           LOAD_GLOBAL              5 (list + NULL)
+               LOAD_FAST                3 (executor)
+               LOAD_ATTR               15 (map + NULL|self)
+               LOAD_FAST_LOAD_FAST     32 (compute_row, A)
+               CALL                     2
+               CALL                     1
+               STORE_FAST               4 (result)
+
+  23   L3:     LOAD_CONST               4 (None)
+               LOAD_CONST               4 (None)
+               LOAD_CONST               4 (None)
+               CALL                     2
+               POP_TOP
+
+  26           LOAD_FAST                4 (result)
+               RETURN_VALUE
+
+  23   L4:     PUSH_EXC_INFO
+               WITH_EXCEPT_START
+               TO_BOOL
+               POP_JUMP_IF_TRUE         1 (to L5)
+               RERAISE                  2
+       L5:     POP_TOP
+       L6:     POP_EXCEPT
+               POP_TOP
+               POP_TOP
+
+  26           LOAD_FAST_CHECK          4 (result)
+               RETURN_VALUE
+
+  --   L7:     COPY                     3
+               POP_EXCEPT
+               RERAISE                  1
+ExceptionTable:
+  L2 to L3 -> L4 [1] lasti
+  L4 to L6 -> L7 [3] lasti
+
+Disassembly of <code object compute_row at 0x00000169DD46C4F0, file ".\matrix_parallelism.py", line 19>:
+  --           COPY_FREE_VARS           1
+
+  19           RESUME                   0
+
+  20           LOAD_DEREF               2 (B_transposed)
+               GET_ITER
+               LOAD_FAST_AND_CLEAR      1 (col)
+               SWAP                     2
+       L1:     BUILD_LIST               0
+               SWAP                     2
+               GET_ITER
+       L2:     FOR_ITER                30 (to L3)
+               STORE_FAST               1 (col)
+               LOAD_GLOBAL              1 (sum + NULL)
+               LOAD_CONST               1 (<code object <genexpr> at 0x00000169DD5BEA30, file ".\matrix_parallelism.py", line 20>)
+               MAKE_FUNCTION
+               LOAD_GLOBAL              3 (zip + NULL)
+               LOAD_FAST_LOAD_FAST      1 (row, col)
+               CALL                     2
+               GET_ITER
+               CALL                     0
+               CALL                     1
+               LIST_APPEND              2
+               JUMP_BACKWARD           32 (to L2)
+       L3:     END_FOR
+               POP_TOP
+       L4:     SWAP                     2
+               STORE_FAST               1 (col)
+               RETURN_VALUE
+
+  --   L5:     SWAP                     2
+               POP_TOP
+
+  20           SWAP                     2
+               STORE_FAST               1 (col)
+               RERAISE                  0
+ExceptionTable:
+  L1 to L4 -> L5 [2]
+
+Disassembly of <code object <genexpr> at 0x00000169DD5BEA30, file ".\matrix_parallelism.py", line 20>:
+  20           RETURN_GENERATOR
+               POP_TOP
+       L1:     RESUME                   0
+               LOAD_FAST                0 (.0)
+               GET_ITER
+       L2:     FOR_ITER                11 (to L3)
+               UNPACK_SEQUENCE          2
+               STORE_FAST_STORE_FAST   18 (a, b)
+               LOAD_FAST_LOAD_FAST     18 (a, b)
+               BINARY_OP                5 (*)
+               YIELD_VALUE              0
+               RESUME                   5
+               POP_TOP
+               JUMP_BACKWARD           13 (to L2)
+       L3:     END_FOR
+               POP_TOP
+               RETURN_CONST             0 (None)
+
+  --   L4:     CALL_INTRINSIC_1         3 (INTRINSIC_STOPITERATION_ERROR)
+               RERAISE                  1
+ExceptionTable:
+  L1 to L4 -> L4 [0] lasti

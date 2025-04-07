@@ -1,0 +1,133 @@
+  0           RESUME                   0
+
+  1           LOAD_CONST               0 (0)
+              LOAD_CONST               1 (None)
+              IMPORT_NAME              0 (time)
+              STORE_NAME               0 (time)
+
+  3           LOAD_CONST               2 (<code object caesar_cipher_encrypt at 0x0000022A6241F130, file ".\crypto.py", line 3>)
+              MAKE_FUNCTION
+              STORE_NAME               1 (caesar_cipher_encrypt)
+
+ 19           LOAD_CONST               3 (<code object caesar_cipher_decrypt at 0x0000022A6283CE40, file ".\crypto.py", line 19>)
+              MAKE_FUNCTION
+              STORE_NAME               2 (caesar_cipher_decrypt)
+
+ 29           LOAD_NAME                3 (__name__)
+              LOAD_CONST               4 ('__main__')
+              COMPARE_OP              88 (bool(==))
+              POP_JUMP_IF_FALSE       61 (to L1)
+
+ 31           LOAD_CONST               5 ("The quick brown fox jumps over the lazy dog 1234567890!@#$%^&*()_+-=[]{}|;:',.<>?/ ")
+              LOAD_CONST               6 (10000)
+              BINARY_OP                5 (*)
+              STORE_NAME               4 (plaintext)
+
+ 32           LOAD_CONST               7 (10)
+              STORE_NAME               5 (shift)
+
+ 35           LOAD_NAME                0 (time)
+              LOAD_ATTR                0 (time)
+              PUSH_NULL
+              CALL                     0
+              STORE_NAME               6 (start_time)
+
+ 37           LOAD_NAME                1 (caesar_cipher_encrypt)
+              PUSH_NULL
+              LOAD_NAME                4 (plaintext)
+              LOAD_NAME                5 (shift)
+              CALL                     2
+              STORE_NAME               7 (encrypted)
+
+ 38           LOAD_NAME                8 (print)
+              PUSH_NULL
+              LOAD_CONST               8 ('Encrypted:')
+              LOAD_NAME                7 (encrypted)
+              CALL                     2
+              POP_TOP
+
+ 40           LOAD_NAME                2 (caesar_cipher_decrypt)
+              PUSH_NULL
+              LOAD_NAME                7 (encrypted)
+              LOAD_NAME                5 (shift)
+              CALL                     2
+              STORE_NAME               9 (decrypted)
+
+ 41           LOAD_NAME                8 (print)
+              PUSH_NULL
+              LOAD_CONST               9 ('Decrypted:')
+              LOAD_NAME                9 (decrypted)
+              CALL                     2
+              POP_TOP
+              RETURN_CONST             1 (None)
+
+ 29   L1:     RETURN_CONST             1 (None)
+
+Disassembly of <code object caesar_cipher_encrypt at 0x0000022A6241F130, file ".\crypto.py", line 3>:
+  3           RESUME                   0
+
+ 10           LOAD_CONST               1 ('')
+              STORE_FAST               2 (encrypted_text)
+
+ 11           LOAD_FAST                0 (text)
+              GET_ITER
+      L1:     FOR_ITER               108 (to L5)
+              STORE_FAST               3 (char)
+
+ 12           LOAD_FAST                3 (char)
+              LOAD_ATTR                1 (isalpha + NULL|self)
+              CALL                     0
+              TO_BOOL
+              POP_JUMP_IF_FALSE       80 (to L4)
+
+ 13           LOAD_FAST                3 (char)
+              LOAD_ATTR                3 (isupper + NULL|self)
+              CALL                     0
+              TO_BOOL
+              POP_JUMP_IF_FALSE       11 (to L2)
+              LOAD_GLOBAL              5 (ord + NULL)
+              LOAD_CONST               2 ('A')
+              CALL                     1
+              JUMP_FORWARD            10 (to L3)
+      L2:     LOAD_GLOBAL              5 (ord + NULL)
+              LOAD_CONST               3 ('a')
+              CALL                     1
+      L3:     STORE_FAST               4 (shift_base)
+
+ 14           LOAD_FAST                2 (encrypted_text)
+              LOAD_GLOBAL              7 (chr + NULL)
+              LOAD_GLOBAL              5 (ord + NULL)
+              LOAD_FAST                3 (char)
+              CALL                     1
+              LOAD_FAST                4 (shift_base)
+              BINARY_OP               10 (-)
+              LOAD_FAST                1 (shift)
+              BINARY_OP                0 (+)
+              LOAD_CONST               4 (26)
+              BINARY_OP                6 (%)
+              LOAD_FAST                4 (shift_base)
+              BINARY_OP                0 (+)
+              CALL                     1
+              BINARY_OP               13 (+=)
+              STORE_FAST               2 (encrypted_text)
+              JUMP_BACKWARD          104 (to L1)
+
+ 16   L4:     LOAD_FAST_LOAD_FAST     35 (encrypted_text, char)
+              BINARY_OP               13 (+=)
+              STORE_FAST               2 (encrypted_text)
+              JUMP_BACKWARD          110 (to L1)
+
+ 11   L5:     END_FOR
+              POP_TOP
+
+ 17           LOAD_FAST                2 (encrypted_text)
+              RETURN_VALUE
+
+Disassembly of <code object caesar_cipher_decrypt at 0x0000022A6283CE40, file ".\crypto.py", line 19>:
+ 19           RESUME                   0
+
+ 26           LOAD_GLOBAL              1 (caesar_cipher_encrypt + NULL)
+              LOAD_FAST_LOAD_FAST      1 (text, shift)
+              UNARY_NEGATIVE
+              CALL                     2
+              RETURN_VALUE
